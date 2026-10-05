@@ -54,6 +54,23 @@ The database consists of three tables:
 2. Run `01_database_setup.sql` to create the database and tables.
 3. Run `02_analysis_queries.sql` to execute the analysis.
 
+## 📊 Power BI Dashboard
+
+![Executive Summary](powerbi_dashboard/page1_executive.png)
+
+An interactive 3-page dashboard built on this dataset.
+
+**Pages:**
+- **Executive Summary** — KPIs, monthly revenue trend, product mix
+- **Customer Analytics** — Customer tiering, revenue by city
+- **Operations** — Order status, monthly orders, product × customer matrix
+
+**Built with:** Power BI Desktop, DAX, Power Query
+
+📂 [View the full dashboard documentation →](powerbi_dashboard/README.md)
+
+---
+
 ## 👤 Author
 
 **Yusuf Baig**
