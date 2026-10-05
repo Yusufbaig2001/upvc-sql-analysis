@@ -37,7 +37,7 @@ The database consists of three tables:
 
 ## 📊 Key Insights
 
-- January 2024 was the highest revenue month, generating over AED 320,000 from completed orders.
+- January 2024 was the highest revenue month, generating over ₹320,000 from completed orders.
 - Builders (customer_type) contributed the highest total revenue compared to Retail and Dealer segments.
 - Windows are the dominant product type, generating around 70% of total revenue.
 - Facebook had the lowest cost-per-lead, while IndiaMART delivered the highest volume of leads.
