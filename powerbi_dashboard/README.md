@@ -1,175 +1,118 @@
-# UPVC Sales & Customer Analytics
+# Power BI Dashboard — UPVC Sales & Customer Analytics
 
-An SQL and Power BI analytics project exploring sales performance, customer behaviour, product revenue and marketing campaign efficiency for a UPVC doors and windows business.
+An interactive three-page Power BI dashboard exploring sample UPVC sales orders, customer segments, product categories, and order statuses.
 
-The project uses a relational MySQL database and business-focused SQL queries to analyse customer orders, completed sales, product performance, city-wise revenue and lead generation.
+> **Dataset note:** This project uses an illustrative dataset containing 6 customers, 10 orders, and 4 marketing campaigns. The figures are not actual company financial results.
 
-> **Dataset disclaimer:** This project uses a small illustrative sample dataset containing 6 customers, 10 orders and 4 marketing campaigns. Figures are not actual company financial results.
+## Dashboard Pages
 
-## Power BI Dashboard
+### Page 1 — Executive Summary
 
-![Executive Summary](powerbi_dashboard/page1_executive.png)
+![Executive Summary](page1_executive.png)
 
-The interactive dashboard contains three analytical pages:
+**Key metrics displayed:**
+- Total recorded order value: approximately ₹1.20M
+- Total orders: 10
+- Average order value: approximately ₹120.1K
+- Order completion rate: 70%
 
-- **Executive Summary:** Revenue KPIs, monthly sales trend and product mix.
-- **Customer Analytics:** Customer segmentation, customer rankings and city-wise sales.
-- **Operations Overview:** Order status, monthly orders and product performance by customer type.
+**Visuals:**
+- Monthly order value trend
+- Product mix: Windows vs Doors
+- Order value by customer type
 
-**Tools:** Power BI Desktop, DAX and Power Query.
+**Metric clarification:** Total recorded order value includes all order statuses unless a visual or measure specifically filters completed orders. It should not automatically be interpreted as completed sales revenue.
 
-[View dashboard documentation](powerbi_dashboard/README.md)
+### Page 2 — Customer Analytics
 
-## Business Problem
+![Customer Analytics](page2_customers.png)
 
-A UPVC doors and windows business needs visibility into its sales and customer data to understand:
+**Key observations from the sample data:**
+- Customer rankings based on recorded order value
+- Mumbai has the highest recorded order value (approximately ₹0.49M)
+- Bangalore follows with approximately ₹0.36M
+- Customer segmentation into VIP, Regular, and Occasional categories
 
-- Which products generate the most completed sales?
-- Which cities contribute the most revenue?
-- Who are the highest-value customers?
-- How many orders are completed, pending or cancelled?
-- Which marketing platforms generate leads at a lower cost?
+**Visuals:**
+- Customer-level order value
+- City-wise order value
+- Customer segmentation
 
-## Project Objectives
+### Page 3 — Order Status & Product Analysis
 
-- Analyse completed sales and order status.
-- Track monthly sales performance.
-- Compare revenue across product types.
-- Identify top customers and customer segments.
-- Analyse city-wise sales performance.
-- Measure campaign Cost Per Lead (CPL).
-- Build an interactive Power BI dashboard.
+![Order Status Analysis](page3_operations.png)
+
+**Key observations:**
+- 70% of orders are completed
+- 20% are pending
+- 10% are cancelled
+- Builders account for approximately ₹810K in recorded order value
+
+**Visuals:**
+- Order status distribution
+- Monthly order trend
+- Product category vs customer type
+
+**Metric clarification:** Order status percentages represent the share of orders by count. The Builders figure represents recorded order value and may include pending or cancelled orders.
 
 ## Tools & Technologies
 
-| Technology | Application |
-|---|---|
-| MySQL | Relational database and SQL analysis |
-| Power BI | Interactive dashboard |
-| DAX | Measures and customer segmentation |
-| Power Query | Data preparation and transformation |
+- Power BI Desktop
+- DAX
+- Power Query
+- MySQL
 
-## Database Schema
+## Example DAX Measures
 
-The project contains three relational tables.
+```dax
+Total Recorded Order Value =
+SUM(orders[amount])
 
-### 1. Customers
+Total Orders =
+COUNT(orders[order_id])
 
-| Column | Description |
-|---|---|
-| customer_id | Unique customer identifier |
-| customer_name | Customer name |
-| city | Customer city |
-| customer_type | Retail, Builder or Dealer |
+Average Order Value =
+DIVIDE(
+    [Total Recorded Order Value],
+    [Total Orders]
+)
 
-### 2. Orders
+Completed Orders =
+CALCULATE(
+    COUNT(orders[order_id]),
+    orders[status] = "Completed"
+)
 
-| Column | Description |
-|---|---|
-| order_id | Unique order identifier |
-| customer_id | Customer reference |
-| order_date | Order date |
-| product_type | Window or Door |
-| quantity | Units ordered |
-| amount | Order amount |
-| status | Completed, Pending or Cancelled |
-
-### 3. Campaigns
-
-| Column | Description |
-|---|---|
-| campaign_id | Unique campaign identifier |
-| platform | Marketing platform |
-| start_date | Campaign start date |
-| spend | Campaign expenditure |
-| leads_generated | Leads generated |
-
-## SQL Analysis
-
-The project includes 15 business analysis queries covering:
-
-1. Database overview and validation.
-2. Order status analysis.
-3. Completed sales summary.
-4. Monthly completed sales trend.
-5. Revenue by product type.
-6. Top customers by completed sales.
-7. Top customers in each city.
-8. Revenue by customer type.
-9. City-wise sales performance.
-10. Customer loyalty segmentation.
-11. Repeat customer analysis.
-12. Marketing campaign performance.
-13. Marketing platform comparison.
-14. Order value by status.
-15. Overall business summary.
-
-## SQL Concepts Demonstrated
-
-- SELECT, WHERE and ORDER BY
-- GROUP BY and HAVING
-- INNER JOIN
-- Aggregate functions: SUM, COUNT and AVG
-- CASE WHEN conditional logic
-- Common Table Expressions (CTEs)
-- Window functions: RANK and LAG
-- Date functions: DATE_FORMAT and YEAR
-- Subqueries
-- NULLIF for safe division
-
-## Key Analytical Areas
-
-The sample data supports analysis of:
-
-- Completed sales versus pending and cancelled order values.
-- Product revenue contribution.
-- Customer revenue rankings and repeat purchases.
-- City and customer-type comparisons.
-- Campaign cost per lead and platform performance.
-
-Because the dataset is small, the results should be treated as SQL and dashboard demonstrations rather than statistically reliable business conclusions.
-
-## Repository Structure
-
-```text
-upvc-sql-analysis/
-│
-├── 01_database_setup.sql
-├── 02_analysis_queries.sql
-├── README.md
-│
-└── powerbi_dashboard/
-    ├── upvc_dashboard.pbix
-    ├── page1_executive.png
-    ├── page2_customers.png
-    ├── page3_operations.png
-    └── README.md
+Completion Rate =
+DIVIDE(
+    [Completed Orders],
+    [Total Orders]
+)
 ```
 
-## How to Run
+## Repository Files
 
-1. Install MySQL 8.0 or later.
-2. Open MySQL Workbench.
-3. Execute `01_database_setup.sql` to create the database and insert sample records.
-4. Execute `02_analysis_queries.sql` to run the analysis.
-5. Open `upvc_dashboard.pbix` in Power BI Desktop to explore the dashboard.
+| File | Description |
+|---|---|
+| `upvc_dashboard.pbix` | Power BI dashboard source file |
+| `page1_executive.png` | Executive Summary screenshot |
+| `page2_customers.png` | Customer Analytics screenshot |
+| `page3_operations.png` | Order Status & Product Analysis screenshot |
 
 ## Project Limitations
 
-- The dataset contains only 6 customers, 10 orders and 4 campaigns.
-- The dataset is illustrative and does not represent verified company results.
-- The project analyses sales and customer operations, not factory manufacturing performance.
-- No production output, machine efficiency, material consumption, defects or rejection data is available.
-- Campaign revenue attribution is not available, so ROAS cannot be calculated from this dataset.
+- The dataset contains only 10 illustrative orders.
+- Pending and cancelled orders should not be treated as completed sales.
+- The analysis focuses on sales orders, customers, products, and order statuses.
+- The dataset does not contain machine output, production defects, material consumption, or manufacturing efficiency data.
+- Findings demonstrate analytical techniques and are not statistically reliable business conclusions.
 
-## AI-Assisted Development
+## Learning Outcomes
 
-AI tools, including ChatGPT, were used to support SQL query development, troubleshooting, explanations and documentation. The project is intended to demonstrate understanding of the analytical concepts and the ability to interpret results, rather than to claim that every query was independently authored.
+- Building interactive Power BI dashboards
+- Creating DAX measures
+- Analysing customer and product performance
+- Presenting order status and sales patterns
+- Communicating data limitations clearly
 
-## Author
-
-**Yusuf Baig**  
-Aspiring Data Analyst | Open to opportunities in Dubai, UAE
-
-- [LinkedIn](https://www.linkedin.com/in/yusuf-baig-783906210/)
-- [GitHub](https://github.com/Yusufbaig2001)
+**Development note:** AI tools assisted with parts of the SQL development, documentation, and analytical workflow. The project is also being used to strengthen practical data-analysis skills.
